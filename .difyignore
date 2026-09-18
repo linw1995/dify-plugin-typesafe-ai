@@ -1,0 +1,16 @@
+.git
+.github/
+.gitignore
+.venv/
+.env
+.env.*
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.coverage
+tests/
+dist/
+*.difypkg
+uv.lock
+.DS_Store

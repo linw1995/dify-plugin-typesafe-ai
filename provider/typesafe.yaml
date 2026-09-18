@@ -1,0 +1,27 @@
+identity:
+  author: linw1995
+  name: typesafe
+  label:
+    en_US: TypeSafe AI
+  description:
+    en_US: Typed evaluations for classification, routing, and scoring.
+  icon: icon.svg
+  tags:
+    - utilities
+credentials_for_provider:
+  api_key:
+    type: secret-input
+    required: true
+    label:
+      en_US: TypeSafe API key
+    placeholder:
+      en_US: Enter your TypeSafe API key
+    help:
+      en_US: Validation performs a small evaluation and may consume API credits.
+    url: https://typesafe.ai
+tools:
+  - tools/yes_no.yaml
+  - tools/evaluate.yaml
+extra:
+  python:
+    source: provider/typesafe.py

@@ -1,0 +1,103 @@
+identity:
+  name: evaluate
+  author: linw1995
+  label:
+    en_US: Evaluate
+description:
+  human:
+    en_US: Evaluate one state against a map of noul, choice, and score questions in one request.
+  llm: >-
+    Evaluate text or structured data using TypeSafe AI. Supply questions as a JSON
+    object keyed by your question IDs. Each question has type and instructions.
+    Use noul for a yes probability, choice with an option-to-description criteria
+    object for classification, or score with an ordered criteria array of at least
+    two descriptions for scoring. Answers preserve your question IDs.
+parameters:
+  - name: state
+    type: string
+    required: true
+    form: llm
+    label:
+      en_US: State
+    human_description:
+      en_US: Text to evaluate, or serialized JSON when State format is JSON.
+    llm_description: The content to evaluate. For structured data, serialize it as JSON and select JSON format.
+  - name: questions
+    type: string
+    required: true
+    form: llm
+    label:
+      en_US: Questions JSON
+    human_description:
+      en_US: A JSON object mapping question IDs to typed question definitions.
+    llm_description: >-
+      JSON object such as {"urgent":{"type":"noul","instructions":"Is it urgent?"}}.
+      Instructions can be a string, object, or array. For noul, optional criteria
+      maps "true" and "false" to descriptions. Choice requires criteria mapping
+      options to descriptions or null. Score requires at least two ordered strings.
+  - name: state_format
+    type: select
+    required: true
+    default: text
+    form: form
+    label:
+      en_US: State format
+    human_description:
+      en_US: Text preserves input exactly. JSON accepts a string, object, or array.
+    options:
+      - value: text
+        label:
+          en_US: Text
+      - value: json
+        label:
+          en_US: JSON
+  - name: model
+    type: string
+    required: true
+    default: jev-latest
+    form: form
+    label:
+      en_US: Model
+    human_description:
+      en_US: TypeSafe model ID or alias.
+output_schema:
+  type: object
+  properties:
+    answers:
+      type: object
+      description: Typed answers keyed by the supplied question IDs.
+      additionalProperties:
+        type: object
+        properties:
+          type:
+            type: string
+            enum: [noul, choice, score]
+          noul:
+            type: number
+          choice:
+            type: string
+          score:
+            type: number
+          confidence:
+            type: number
+          probabilities:
+            type: object
+            additionalProperties:
+              type: number
+          legend:
+            type: object
+            additionalProperties:
+              type: string
+    model:
+      type: string
+      description: Model used by TypeSafe.
+    usage:
+      type: object
+      properties:
+        input_tokens:
+          type: integer
+        output_tokens:
+          type: integer
+extra:
+  python:
+    source: tools/evaluate.py

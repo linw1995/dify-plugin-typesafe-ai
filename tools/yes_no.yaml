@@ -1,0 +1,92 @@
+identity:
+  name: yes_no
+  author: linw1995
+  label:
+    en_US: Yes / No
+description:
+  human:
+    en_US: Judge a yes-or-no question using plain instructions and return a probability and decision.
+  llm: >-
+    Evaluate a state against a yes-or-no question. Provide the state and plain-text
+    instructions, optionally describing what yes and no mean. Returns the probability
+    of yes and a boolean decision using the configured threshold. No JSON is required.
+parameters:
+  - name: state
+    type: string
+    required: true
+    form: llm
+    label:
+      en_US: State
+    human_description:
+      en_US: The content or yes-or-no question to evaluate.
+    llm_description: The content to judge, including any context needed to answer the question.
+  - name: instructions
+    type: string
+    required: true
+    form: llm
+    default: Answer the yes-or-no question in the state using the supplied context.
+    label:
+      en_US: Instructions
+    human_description:
+      en_US: The yes-or-no question or rule to apply to the state. Plain text; no JSON required.
+    llm_description: A yes-or-no question or judgment rule to apply to the state.
+  - name: yes_criteria
+    type: string
+    required: false
+    form: llm
+    label:
+      en_US: Yes criteria
+    human_description:
+      en_US: Optional description of what an affirmative answer means.
+    llm_description: Optional criteria for a yes answer.
+  - name: no_criteria
+    type: string
+    required: false
+    form: llm
+    label:
+      en_US: No criteria
+    human_description:
+      en_US: Optional description of what a negative answer means.
+    llm_description: Optional criteria for a no answer.
+  - name: threshold
+    type: number
+    required: true
+    default: 0.5
+    min: 0
+    max: 1
+    precision: 4
+    form: form
+    label:
+      en_US: Yes threshold
+    human_description:
+      en_US: The decision is true when the yes probability is at least this threshold.
+  - name: model
+    type: string
+    required: true
+    default: jev-latest
+    form: form
+    label:
+      en_US: Model
+    human_description:
+      en_US: TypeSafe model ID or alias.
+output_schema:
+  type: object
+  properties:
+    probability:
+      type: number
+      description: Probability of yes, from zero to one.
+    decision:
+      type: boolean
+      description: Whether probability is greater than or equal to the configured threshold.
+    model:
+      type: string
+    usage:
+      type: object
+      properties:
+        input_tokens:
+          type: integer
+        output_tokens:
+          type: integer
+extra:
+  python:
+    source: tools/yes_no.py

@@ -174,6 +174,11 @@ The debug key belongs to Dify. Configure the separate TypeSafe API key in the
 plugin's provider settings. The packaging ignore file excludes local environment
 files, the virtual environment, tests, and previous packages.
 
+## Source and support
+
+- Source repository: [linw1995/dify-plugin-typesafe-ai](https://github.com/linw1995/dify-plugin-typesafe-ai).
+- Contact: [GitHub issues](https://github.com/linw1995/dify-plugin-typesafe-ai/issues).
+
 ## References
 
 - [TypeSafe API reference](https://docs.typesafe.ai/api)

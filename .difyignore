@@ -1,6 +1,9 @@
 .git
 .github/
 .gitignore
+.difyignore
+.python-version
+pyproject.toml
 .venv/
 .env
 .env.*

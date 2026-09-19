@@ -2,6 +2,8 @@ version: 0.1.1
 type: plugin
 author: linw1995
 name: typesafe
+repo: https://github.com/linw1995/dify-plugin-typesafe-ai
+contact: linw1995@icloud.com
 label:
   en_US: TypeSafe AI
 description:
